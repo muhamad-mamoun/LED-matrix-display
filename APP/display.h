@@ -26,9 +26,7 @@ Description  :
 #define NUMBER_OF_ROWS                     (8U)
 #define NUMBER_OF_COLS                     (32U)
 #define DISPLAY_BUFFER_SIZE                (100U)
-
 #define MESSAGE_TERMINATOR                 ('\0')
-#define FIRST_CHARACTER_ADDRESS            (0X04)
 
 #if (DISPLAY_BUFFER_SIZE > 127)
 #error "Display buffer size limit is 127." /* To increase it, you need to change some variables datatypes. */

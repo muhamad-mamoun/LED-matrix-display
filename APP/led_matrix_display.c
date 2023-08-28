@@ -20,7 +20,7 @@ Description  :
                                            < Global Variables >
 =====================================================================================================================*/
 
-DISPLAY_characterType g_message[MESSAGE_LENGTH] = "Hello, World!";
+DISPLAY_characterType g_message[MESSAGE_LENGTH] = "Hello, World!    ";
 
 /*=====================================================================================================================
                                       < Private Functions Prototypes >

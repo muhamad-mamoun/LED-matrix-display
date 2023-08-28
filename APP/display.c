@@ -14,15 +14,13 @@ Description  :
 ==================================================================================================================*/
 
 #include "display.h"
+#include "characters_map.h"
 #include "../HAL/shift_register.h"
 #include <util/delay.h>
 
 /*==================================================================================================================
                                            < Global Variables >
 ==================================================================================================================*/
-
-/* PROTOTYPE */
-static uint8 g_character_M_map[8] = {0b00111111,0b01111110,0b01100000,0b00110000,0b01100001,0b01111111,0b00111110,0b11111111};
 
 static HC595_registerPinsType g_rowsRegisterPins = {PORTA_ID,PIN0_ID,PORTA_ID,PIN1_ID,PORTA_ID,PIN2_ID};
 static HC595_registerPinsType g_colsRegisterPins = {PORTA_ID,PIN3_ID,PORTA_ID,PIN4_ID,PORTA_ID,PIN5_ID};
@@ -53,6 +51,16 @@ static void DISPLAY_shiftBuffer(void);
  =================================================================================================================*/
 static void DISPLAY_buffer(void);
 
+
+/*==================================================================================================================
+ * [Function Name] :
+ * [Description]   :
+ * [Arguments]     : <>      ->
+ *                   <>      ->
+ * [return]        : The function returns void.
+ =================================================================================================================*/
+static void DISPLAY_spaceBetweenCharacters(void);
+
 /*==================================================================================================================
                                           < Functions Definitions >
 ==================================================================================================================*/
@@ -74,21 +82,14 @@ void DISPLAY_string(DISPLAY_characterType* a_ptr2message)
 {
 	for(uint8 character_counter = 0; *(a_ptr2message + character_counter) != MESSAGE_TERMINATOR; character_counter++)
 	{
-		/* equation to calculate the address of the character in the EEPROM */
-		// uint16* character_map_address = FIRST_CHARACTER_ADDRESS + *(a_ptr2message + character_counter);
-		for(uint8 character_map_index = 0; *(g_character_M_map + character_map_index) != 0XFF; character_map_index++)
+		DISPLAY_characterMapType* character_map_address = (DISPLAY_characterMapType*)(g_character_map + *(a_ptr2message + character_counter) - 32);
+		for(uint8 character_map_index = 0; *(character_map_address + character_map_index) != 0XFF; character_map_index++)
 		{
 			DISPLAY_shiftBuffer();
-			g_display_buffer[0] = *(g_character_M_map + character_map_index);
-			// EEPROM_readByte((g_character_M_map + character_map_index),g_display_buffer);
-
+			g_display_buffer[0] = *(character_map_address + character_map_index);
 			DISPLAY_buffer();
 		}
-		DISPLAY_shiftBuffer();
-		g_display_buffer[0] = 0b00000000;
-		DISPLAY_shiftBuffer();
-		g_display_buffer[0] = 0b00000000;
-		DISPLAY_buffer();
+		DISPLAY_spaceBetweenCharacters();
 	}
 	/* display ~2 spaces before display it again. */
 }
@@ -110,7 +111,7 @@ static void DISPLAY_shiftBuffer(void)
 
 static void DISPLAY_buffer(void)
 {
-	for(uint8 iteration_counter = 0; iteration_counter < 5; iteration_counter++)
+	for(uint8 iteration_counter = 0; iteration_counter < 2; iteration_counter++)
 	{
 		/* Activate the first column. */
 		HC595_updatedShiftRegister(&g_colsRegisterPins,1,1);
@@ -121,5 +122,15 @@ static void DISPLAY_buffer(void)
 			_delay_us(500);
 			HC595_updatedShiftRegister(&g_colsRegisterPins,1,0);
 		}
+	}
+}
+
+static void DISPLAY_spaceBetweenCharacters(void)
+{
+	for(uint8 space_counter = 0; space_counter < 2; space_counter++)
+	{
+		DISPLAY_shiftBuffer();
+		g_display_buffer[0] = 0X00;
+		DISPLAY_buffer();
 	}
 }
