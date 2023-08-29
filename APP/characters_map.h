@@ -16,9 +16,10 @@ Description  : All ASCII printable characters bitmap values [Thin Pixel-7 Font].
                                 < Definitions and Static Configurations >
 =====================================================================================================================*/
 
-#define NUMBER_OF_CHARACTERS               (95)
-#define NUMBER_OF_COL_PER_CHARACTER        (8)
-#define CHARACTER_MAP_TERMINATOR           (0b11111111)
+#define NUMBER_OF_CHARACTERS               (95U)
+#define NUMBER_OF_COL_PER_CHARACTER        (8U)
+#define CHARACTER_MAP_TERMINATOR           (0XFF)
+#define FIRST_CHARACTER_VALUE              (32U)
 
 /*=====================================================================================================================
                                        < Shared Global Variables >
