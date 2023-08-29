@@ -1,10 +1,10 @@
 /*
 =============================================================================================================
 Author       : Mamoun
-Module       : 
+Module       : Characters Map
 File Name    : characters_map.h
 Date Created : Aug 28, 2023
-Description  : 
+Description  : All ASCII printable characters bitmap values [Thin Pixel-7 Font].
 =============================================================================================================
 */
 
@@ -13,10 +13,18 @@ Description  :
 #define APP_CHARACTERS_MAP_H_
 
 /*=====================================================================================================================
+                                < Definitions and Static Configurations >
+=====================================================================================================================*/
+
+#define NUMBER_OF_CHARACTERS               (95)
+#define NUMBER_OF_COL_PER_CHARACTER        (8)
+#define CHARACTER_MAP_TERMINATOR           (0b11111111)
+
+/*=====================================================================================================================
                                        < Shared Global Variables >
 =====================================================================================================================*/
 
-DISPLAY_characterMapType g_character_map[95][8] =
+DISPLAY_characterMapType g_character_map[NUMBER_OF_CHARACTERS][NUMBER_OF_COL_PER_CHARACTER] =
 {
 {0b00000000,0b00000000,0b11111111,0b11111111,0b11111111,0b11111111,0b11111111,0b11111111}, /*   */
 {0b01111101,0b11111111,0b11111111,0b11111111,0b11111111,0b11111111,0b11111111,0b11111111}, /* ! */
