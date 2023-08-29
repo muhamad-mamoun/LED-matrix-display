@@ -31,8 +31,11 @@ Description  : Source file for the AVR GPIO peripheral driver.
  ====================================================================================================================*/
 void GPIO_setupPinDirection(uint8 a_portID, uint8 a_pinID, GPIO_pinDirectionType a_direction)
 {
-	volatile uint8* const registerAddress = (&DDRA)+(a_portID*GPIO_REG_GAP);
-	WRITE_BIT(*registerAddress,a_pinID,a_direction);
+	if((a_portID < NUM_OF_PORTS) && (a_pinID < NUM_OF_PINS_PER_PORT))
+	{
+		volatile uint8* const registerAddress = (&DDRA)+(a_portID*GPIO_REG_GAP);
+		WRITE_BIT(*registerAddress,a_pinID,a_direction);
+	}
 }
 
 /*=====================================================================================================================
@@ -44,8 +47,11 @@ void GPIO_setupPinDirection(uint8 a_portID, uint8 a_pinID, GPIO_pinDirectionType
  ====================================================================================================================*/
 void GPIO_setupPortDirection(uint8 a_portID, GPIO_portDirectionType a_direction)
 {
-	volatile uint8* const registerAddress = (&DDRA)+(a_portID*GPIO_REG_GAP);
-	*registerAddress = a_direction;
+	if(a_portID < NUM_OF_PORTS)
+	{
+		volatile uint8* const registerAddress = (&DDRA)+(a_portID*GPIO_REG_GAP);
+		*registerAddress = a_direction;
+	}
 }
 
 /*=====================================================================================================================
@@ -58,8 +64,11 @@ void GPIO_setupPortDirection(uint8 a_portID, GPIO_portDirectionType a_direction)
  ====================================================================================================================*/
 void GPIO_writePin(uint8 a_portID, uint8 a_pinID, GPIO_pinStateType a_value)
 {
-	volatile uint8* const registerAddress = (&PORTA)+(a_portID*GPIO_REG_GAP);
-	WRITE_BIT(*registerAddress,a_pinID,a_value);
+	if((a_portID < NUM_OF_PORTS) && (a_pinID < NUM_OF_PINS_PER_PORT))
+	{
+		volatile uint8* const registerAddress = (&PORTA)+(a_portID*GPIO_REG_GAP);
+		WRITE_BIT(*registerAddress,a_pinID,a_value);
+	}
 }
 
 /*=====================================================================================================================
@@ -71,8 +80,11 @@ void GPIO_writePin(uint8 a_portID, uint8 a_pinID, GPIO_pinStateType a_value)
  ====================================================================================================================*/
 void GPIO_writePort(uint8 a_portID, uint8 a_value)
 {
-	volatile uint8* const registerAddress = (&PORTA)+(a_portID*GPIO_REG_GAP);
-	*registerAddress = a_value;
+	if(a_portID < NUM_OF_PORTS)
+	{
+		volatile uint8* const registerAddress = (&PORTA)+(a_portID*GPIO_REG_GAP);
+		*registerAddress = a_value;
+	}
 }
 
 /*=====================================================================================================================
@@ -85,8 +97,13 @@ void GPIO_writePort(uint8 a_portID, uint8 a_value)
 uint8 GPIO_readPin(uint8 a_portID, uint8 a_pinID)
 {
 	GPIO_pinStateType pinValue = LOW_PIN;
-	volatile const uint8* const registerAddress = (&PINA)+(a_portID*GPIO_REG_GAP);
-	pinValue = GET_BIT(*registerAddress,a_pinID);
+
+	if(a_portID < NUM_OF_PORTS)
+	{
+		volatile const uint8* const registerAddress = (&PINA)+(a_portID*GPIO_REG_GAP);
+		pinValue = GET_BIT(*registerAddress,a_pinID);
+	}
+
 	return pinValue;
 }
 
@@ -99,7 +116,12 @@ uint8 GPIO_readPin(uint8 a_portID, uint8 a_pinID)
 uint8 GPIO_readPort(uint8 a_portID)
 {
 	uint8 portValue = 0;
-	volatile const uint8* const registerAddress = (&PINA)+(a_portID*GPIO_REG_GAP);
-	portValue = *registerAddress;
+
+	if(a_portID < NUM_OF_PORTS)
+	{
+		volatile const uint8* const registerAddress = (&PINA)+(a_portID*GPIO_REG_GAP);
+		portValue = *registerAddress;
+	}
+
 	return portValue;
 }

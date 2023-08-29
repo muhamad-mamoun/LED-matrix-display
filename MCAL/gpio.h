@@ -22,9 +22,9 @@ Description  : Header file for the AVR GPIO peripheral driver.
                                 < Definitions and Static Configurations >
 =====================================================================================================================*/
 
-#define GPIO_REG_GAP              (3u)    /* The gap between two ports in the memory */
-#define NUM_OF_PORTS              (4u)    /* The number of IO ports in the MC */
-#define NUM_OF_PINS_PER_PORT      (8u)    /* The number of pins in every port */
+#define GPIO_REG_GAP              (3u)             /* The gap between two ports in the memory. */
+#define NUM_OF_PORTS              (4u)             /* The number of IO ports in the MC.        */
+#define NUM_OF_PINS_PER_PORT      (8u)             /* The number of pins in every port.        */
 
 #define PORTA_ID                  (0u)
 #define PORTB_ID                  (1u)
