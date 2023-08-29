@@ -24,7 +24,7 @@ Description  : All ASCII printable characters bitmap values [Thin Pixel-7 Font].
                                        < Shared Global Variables >
 =====================================================================================================================*/
 
-DISPLAY_characterMapType g_character_map[NUMBER_OF_CHARACTERS][NUMBER_OF_COL_PER_CHARACTER] =
+DISPLAY_characterMapIndexType g_character_map[NUMBER_OF_CHARACTERS][NUMBER_OF_COL_PER_CHARACTER] =
 {
 {0b00000000,0b00000000,0b11111111,0b11111111,0b11111111,0b11111111,0b11111111,0b11111111}, /*   */
 {0b01111101,0b11111111,0b11111111,0b11111111,0b11111111,0b11111111,0b11111111,0b11111111}, /* ! */
