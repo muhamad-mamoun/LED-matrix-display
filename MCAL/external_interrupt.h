@@ -22,8 +22,13 @@ Description  : Header File for all AVR external interrupts driver.
                                 < Definitions and Static Configurations >
 =====================================================================================================================*/
 
-#define DISABLE                   (0u)
-#define ENABLE                    (1u)
+#ifndef DISABLE
+#define DISABLE                   (0U)
+#endif
+
+#ifndef ENABLE
+#define ENABLE                    (1U)
+#endif
 
 #define EXTERNAL_INTERRUPT_0      (ENABLE)
 #define EXTERNAL_INTERRUPT_1      (DISABLE)
@@ -55,15 +60,94 @@ typedef enum
 #endif
 
 /*=====================================================================================================================
-                                         < Function-like Macros >
-=====================================================================================================================*/
-
-
-
-/*=====================================================================================================================
                                          < Functions Prototypes >
 =====================================================================================================================*/
 
 
+#if (EXTERNAL_INTERRUPT_0 == ENABLE)
+/*===========================================================================================================
+ * [Function Name] : INT0_init
+ * [Description]   : Initialize external interrupt 0 with specific configurations.
+ * [Arguments]     : <a_edgeType>      -> Indicates to the required edge type to be detected.
+ * [return]        : The function returns void.
+ ==========================================================================================================*/
+void INT0_init(INT0_senseControlType a_edgeType);
+
+
+/*===========================================================================================================
+ * [Function Name] : INT0_disable
+ * [Description]   : Disable the external interrupt 0.
+ * [Arguments]     : The function takes no arguments.
+ * [return]        : The function returns void.
+ ==========================================================================================================*/
+void INT0_disable(void);
+
+
+/*===========================================================================================================
+ * [Function Name] : INT0_setCallBack
+ * [Description]   : Save the address of the Call back function in a global variable.
+ * [Arguments]     : <a_ptr2func>      -> Pointer points to the call-back function.
+ * [return]        : The function returns void.
+ ==========================================================================================================*/
+void INT0_setCallBack(void(*a_ptr2func)(void));
+#endif
+
+
+#if (EXTERNAL_INTERRUPT_1 == ENABLE)
+/*===========================================================================================================
+ * [Function Name] : INT1_init
+ * [Description]   : Initialize external interrupt 1 with specific configurations.
+ * [Arguments]     : <a_edgeType>      -> Indicates to the required edge type to be detected.
+ * [return]        : The function returns void.
+ ==========================================================================================================*/
+void INT1_init(INT1_senseControlType a_edgeType);
+
+
+/*===========================================================================================================
+ * [Function Name] : INT1_disable
+ * [Description]   : Disable the external interrupt 1.
+ * [Arguments]     : The function takes no arguments.
+ * [return]        : The function returns void.
+ ==========================================================================================================*/
+void INT1_disable(void);
+
+
+/*===========================================================================================================
+ * [Function Name] : INT1_setCallBack
+ * [Description]   : Save the address of the Call back function in a global variable.
+ * [Arguments]     : <a_ptr2func>      -> Pointer points to the call-back function.
+ * [return]        : The function returns void.
+ ==========================================================================================================*/
+void INT1_setCallBack(void(*a_ptr2func)(void));
+#endif
+
+
+#if (EXTERNAL_INTERRUPT_2 == ENABLE)
+/*===========================================================================================================
+ * [Function Name] : INT2_init
+ * [Description]   : Initialize external interrupt 2 with specific configurations.
+ * [Arguments]     : <a_edgeType>      -> Indicates to the required edge type to be detected.
+ * [return]        : The function returns void.
+ ==========================================================================================================*/
+void INT2_init(INT2_senseControlType a_edgeType);
+
+
+/*===========================================================================================================
+ * [Function Name] : INT2_disable
+ * [Description]   : Disable the external interrupt 2.
+ * [Arguments]     : The function takes no arguments.
+ * [return]        : The function returns void.
+ ==========================================================================================================*/
+void INT2_disable(void);
+
+
+/*===========================================================================================================
+ * [Function Name] : INT2_setCallBack
+ * [Description]   : Save the address of the Call back function in a global variable.
+ * [Arguments]     : <a_ptr2func>      -> Pointer points to the call-back function.
+ * [return]        : The function returns void.
+ ==========================================================================================================*/
+void INT2_setCallBack(void(*a_ptr2func)(void));
+#endif
 
 #endif /* MCAL_EXTERNAL_INTERRUPT_H_ */
