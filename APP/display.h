@@ -60,8 +60,8 @@ typedef unsigned char DISPLAY_characterMapIndexType;
 
 
 /*==================================================================================================================
- * [Function Name] :
- * [Description]   :
+ * [Function Name] : DISPLAY_init
+ * [Description]   : Initialize the Display module by setting up the rows and columns shift registers.
  * [Arguments]     : The function takes no arguments.
  * [return]        : The function returns void.
  =================================================================================================================*/
@@ -69,12 +69,20 @@ void DISPLAY_init(void);
 
 
 /*==================================================================================================================
- * [Function Name] :
- * [Description]   :
- * [Arguments]     : <>      ->
- *                   <>      ->
+ * [Function Name] : DISPLAY_sendString
+ * [Description]   : Send a specific string to the buffer to be displayed on the LED Matrix screen.
+ * [Arguments]     : <a_ptr2message>      -> Pointer points to the required string to be displayed.
  * [return]        : The function returns void.
  =================================================================================================================*/
-void DISPLAY_string(DISPLAY_characterType* a_ptr2message);
+void DISPLAY_sendString(DISPLAY_characterType* a_ptr2message);
+
+
+/*==================================================================================================================
+ * [Function Name] : DISPLAY_sendCharacter
+ * [Description]   : Send a specific character to the buffer to be displayed on the LED Matrix screen.
+ * [Arguments]     : <a_character>      -> The required character to be displayed.
+ * [return]        : The function returns void.
+ =================================================================================================================*/
+void DISPLAY_sendCharacter(DISPLAY_characterType a_character);
 
 #endif /* APP_DISPLAY_H_ */

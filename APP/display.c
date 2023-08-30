@@ -32,35 +32,29 @@ static DISPLAY_characterMapIndexType g_display_buffer[DISPLAY_BUFFER_SIZE] = {0}
                                       < Private Functions Prototypes >
 ==================================================================================================================*/
 
+/*==================================================================================================================
+ * [Function Name] : DISPLAY_sendEmptyColumn
+ * [Description]   : Send a specific number of empty columns to the buffer to be displayed on the LED Matrix screen.
+ * [Arguments]     : <a_numberOfColumns>      -> The required number of empty columns to be displayed.
+ * [return]        : The function returns void.
+ =================================================================================================================*/
+static void DISPLAY_sendEmptyColumn(uint8 a_numberOfColumns);
 
 /*==================================================================================================================
- * [Function Name] :
- * [Description]   :
- * [Arguments]     : <>      ->
- *                   <>      ->
+ * [Function Name] : DISPLAY_shiftBuffer
+ * [Description]   : Shift the entire Buffer array by one index.
+ * [Arguments]     : The function takes no arguments.
  * [return]        : The function returns void.
  =================================================================================================================*/
 static void DISPLAY_shiftBuffer(void);
 
-
 /*==================================================================================================================
- * [Function Name] :
- * [Description]   :
- * [Arguments]     : <>      ->
- *                   <>      ->
+ * [Function Name] : DISPLAY_renderBuffer
+ * [Description]   : Display the content of the Buffer on the LED Matrix screen.
+ * [Arguments]     : The function takes no arguments.
  * [return]        : The function returns void.
  =================================================================================================================*/
 static void DISPLAY_renderBuffer(void);
-
-
-/*==================================================================================================================
- * [Function Name] :
- * [Description]   :
- * [Arguments]     : <>      ->
- *                   <>      ->
- * [return]        : The function returns void.
- =================================================================================================================*/
-static void DISPLAY_emptyColumn(uint8 a_numberOfColumns);
 
 /*==================================================================================================================
                                           < Functions Definitions >
@@ -79,33 +73,68 @@ void DISPLAY_init(void)
 }
 
 /*==================================================================================================================
- * [Function Name] : DISPLAY_string
- * [Description]   : Display a specific string on the LED Matrix screen.
+ * [Function Name] : DISPLAY_sendString
+ * [Description]   : Send a specific string to the buffer to be displayed on the LED Matrix screen.
  * [Arguments]     : <a_ptr2message>      -> Pointer points to the required string to be displayed.
  * [return]        : The function returns void.
  =================================================================================================================*/
-void DISPLAY_string(DISPLAY_characterType* a_ptr2message)
+void DISPLAY_sendString(DISPLAY_characterType* a_ptr2message)
 {
+	/* Iterate through the characters of the string and send them to the buffer to be displayed. */
 	for(uint8 character_counter = 0; *(a_ptr2message + character_counter) != MESSAGE_TERMINATOR; character_counter++)
 	{
-		DISPLAY_characterMapIndexType* character_map_address = CALCULATE_CHARACTER_MAP_ADDRESS(*(a_ptr2message + character_counter));
-		for(uint8 character_map_index = 0; *(character_map_address + character_map_index) != CHARACTER_MAP_TERMINATOR; character_map_index++)
-		{
-			DISPLAY_shiftBuffer();
-			g_display_buffer[0] = *(character_map_address + character_map_index);
-			DISPLAY_renderBuffer();
-		}
-		DISPLAY_emptyColumn(2);
+		/* Send the current character to the buffer to be displayed. */
+		DISPLAY_sendCharacter(*(a_ptr2message + character_counter));
+
+		/* Send empty columns between every two characters. */
+		DISPLAY_sendEmptyColumn(2);
 	}
-	/* display ~2 spaces before display it again. */
+
+	/* Send empty columns at the end of the string. */
+	DISPLAY_sendEmptyColumn(4);
 }
 
-static void DISPLAY_emptyColumn(uint8 a_numberOfColumns)
+/*==================================================================================================================
+ * [Function Name] : DISPLAY_sendCharacter
+ * [Description]   : Send a specific character to the buffer to be displayed on the LED Matrix screen.
+ * [Arguments]     : <a_character>      -> The required character to be displayed.
+ * [return]        : The function returns void.
+ =================================================================================================================*/
+void DISPLAY_sendCharacter(DISPLAY_characterType a_character)
+{
+	uint8 character_map_index = 0;
+	DISPLAY_characterMapIndexType* character_map_address = NULL_PTR;
+	character_map_address = CALCULATE_CHARACTER_MAP_ADDRESS(a_character);
+
+	/* Guarding from accessing a NULL pointer. */
+	if(character_map_address != NULL_PTR)
+	{
+		/* Iterate through the indexes of the character and send them to the buffer to be displayed. */
+		for(; *(character_map_address + character_map_index) != CHARACTER_MAP_TERMINATOR; character_map_index++)
+		{
+			DISPLAY_shiftBuffer(); /* Shift the buffer indexes by one and store the next index at buffer[0]. */
+			g_display_buffer[0] = *(character_map_address + character_map_index);
+
+			/* Render the content of the buffer to be displayed on the LED Matrix screen. */
+			DISPLAY_renderBuffer();
+		}
+	}
+}
+
+/*==================================================================================================================
+ * [Function Name] : DISPLAY_sendEmptyColumn
+ * [Description]   : Send a specific number of empty columns to the buffer to be displayed on the LED Matrix screen.
+ * [Arguments]     : <a_numberOfColumns>      -> The required number of empty columns to be displayed.
+ * [return]        : The function returns void.
+ =================================================================================================================*/
+static void DISPLAY_sendEmptyColumn(uint8 a_numberOfColumns)
 {
 	for(uint8 space_counter = 0; space_counter < a_numberOfColumns; space_counter++)
 	{
-		DISPLAY_shiftBuffer();
+		DISPLAY_shiftBuffer(); /* Shift the buffer indexes by one and store the next index at buffer[0]. */
 		g_display_buffer[0] = 0X00;
+
+		/* Render the content of the buffer to be displayed on the LED Matrix screen. */
 		DISPLAY_renderBuffer();
 	}
 }
