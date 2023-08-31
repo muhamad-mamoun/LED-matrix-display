@@ -14,15 +14,18 @@ Description  : Source file for the LED Matrix Display Project.
 =====================================================================================================================*/
 
 #include "led_matrix_display.h"
+#include "../OTHERS/common_macros.h"
 #include "../MCAL/external_interrupt.h"
 #include "../MCAL/uart.h"
+#include "../HAL/led.h"
 #include "display.h"
+#include <avr/io.h>
 
 /*=====================================================================================================================
                                            < Global Variables >
 =====================================================================================================================*/
 
-volatile void (*g_ptr2eventHandlingFunction)(void) = NULL_PTR;
+static volatile void (*g_ptr2activeModeFunction)(void) = NULL_PTR;
 
 DISPLAY_characterType g_message[MESSAGE_LENGTH_LIMIT] = "Hello, World!";
 
@@ -38,7 +41,7 @@ UART_configurationsType g_UART_configuration = {UART_SINGLE_STOP_BIT,UART_PARITY
  * [Arguments]     : The function takes no arguments.
  * [return]        : The function returns void.
  ====================================================================================================================*/
-volatile void SwitchMode(void);
+static volatile void SwitchMode(void);
 
 /*=====================================================================================================================
  * [Function Name] : DisplayData
@@ -46,7 +49,7 @@ volatile void SwitchMode(void);
  * [Arguments]     : The function takes no arguments.
  * [return]        : The function returns void.
  ====================================================================================================================*/
-volatile void DisplayData(void);
+static volatile void DisplayData(void);
 
 /*=====================================================================================================================
  * [Function Name] : ReceiveData
@@ -54,7 +57,7 @@ volatile void DisplayData(void);
  * [Arguments]     : The function takes no arguments.
  * [return]        : The function returns void.
  ====================================================================================================================*/
-volatile void ReceiveData(void);
+static volatile void ReceiveData(void);
 
 /*=====================================================================================================================
                                           < Functions Definitions >
@@ -68,17 +71,21 @@ volatile void ReceiveData(void);
  ====================================================================================================================*/
 int main(void)
 {
-	DISPLAY_init();
-	INT0_init(INT0_RISING_EDGE);
-	INT0_setCallBack(SwitchMode);
-	UART0_init(&g_UART_configuration);
-	g_ptr2eventHandlingFunction = DisplayData;
+	DISPLAY_init();                                             /* Initialize the Display module.           */
+	INT0_init(INT0_RISING_EDGE);                                /* Initialize the INT0 External Interrupt.  */
+	INT0_setCallBack(SwitchMode);                               /* Set the INT0 call-back function address. */
+	UART0_init(&g_UART_configuration);                          /* Initialize the UART0 peripheral.         */
+	g_ptr2activeModeFunction = DisplayData;                     /* Set the Display mode as the active mode. */
+	LED_init(SWITCH_MODE_LED_PORT,SWITCH_MODE_LED_PIN);         /* Initialize the LED.                      */
+	ENABLE_GLOBAL_INT();                                        /* Enable the AVR global interrupt.         */
 
 	while(1)
 	{
-		if(g_ptr2eventHandlingFunction != NULL_PTR)
+		/* Guarding from accessing a NULL pointer. */
+		if(g_ptr2activeModeFunction != NULL_PTR)
 		{
-			(*g_ptr2eventHandlingFunction)();
+			/* Call the active mode function. */
+			(*g_ptr2activeModeFunction)();
 		}
 	}
 }
@@ -89,9 +96,10 @@ int main(void)
  * [Arguments]     : The function takes no arguments.
  * [return]        : The function returns void.
  ====================================================================================================================*/
-volatile void SwitchMode(void)
+static volatile void SwitchMode(void)
 {
-	g_ptr2eventHandlingFunction = ReceiveData;
+	g_dispaly_state = DISPLAY_OFF;                              /* Turn OFF the display.         */
+	g_ptr2activeModeFunction = ReceiveData;                     /* Switch to the Receive mode.   */
 }
 
 /*=====================================================================================================================
@@ -100,9 +108,9 @@ volatile void SwitchMode(void)
  * [Arguments]     : The function takes no arguments.
  * [return]        : The function returns void.
  ====================================================================================================================*/
-volatile void DisplayData(void)
+static volatile void DisplayData(void)
 {
-	DISPLAY_sendString(g_message);
+	DISPLAY_sendString(g_message);                              /* Display the message. */
 }
 
 /*=====================================================================================================================
@@ -111,8 +119,12 @@ volatile void DisplayData(void)
  * [Arguments]     : The function takes no arguments.
  * [return]        : The function returns void.
  ====================================================================================================================*/
-volatile void ReceiveData(void)
+static volatile void ReceiveData(void)
 {
-	UART0_receiveString(g_message);
-	g_ptr2eventHandlingFunction = DisplayData;
+
+	LED_on(SWITCH_MODE_LED_PORT,SWITCH_MODE_LED_PIN);           /* Turn ON the receiving LED indicator.   */
+	UART0_receiveString(g_message);                             /* Receive the new message through UART.  */
+	LED_off(SWITCH_MODE_LED_PORT,SWITCH_MODE_LED_PIN);          /* Turn OFF the receiving LED indicator.  */
+	g_ptr2activeModeFunction = DisplayData;                     /* Switch to the Dispaly mode.            */
+	g_dispaly_state = DISPLAY_ON;                               /* Turn ON the display.                   */
 }

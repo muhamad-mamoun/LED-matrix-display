@@ -24,4 +24,7 @@ Description  : Header file for the LED Matrix Display Project.
 
 #define MESSAGE_LENGTH_LIMIT                     (100U)
 
+#define SWITCH_MODE_LED_PORT                     (PORTD_ID)
+#define SWITCH_MODE_LED_PIN                      (PIN1_ID)
+
 #endif /* APP_LED_MATRIX_DISPLAY_H_ */
