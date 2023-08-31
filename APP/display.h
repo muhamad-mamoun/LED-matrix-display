@@ -22,6 +22,9 @@ Description  : Header file for the Display driver [Used to display on the LED Ma
                                 < Definitions and Static Configurations >
 ===================================================================================================================*/
 
+#define DISPLAY_OFF                               (0U)
+#define DISPLAY_ON                                (1U)
+
 #define SCREEN_NUMBER_OF_ROWS                     (8U)
 #define SCREEN_NUMBER_OF_COLS                     (32U)
 #define DISPLAY_BUFFER_SIZE                       (100U)
@@ -40,6 +43,12 @@ Description  : Header file for the Display driver [Used to display on the LED Ma
 #if (DISPLAY_SPEED > 20)
 #warning "The display speed is too slow."
 #endif
+
+/*=====================================================================================================================
+                                       < Shared Global Variables >
+=====================================================================================================================*/
+
+extern uint8 g_dispaly_state;
 
 /*===================================================================================================================
                                        < User-defined Data Types >

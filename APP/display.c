@@ -23,6 +23,8 @@ Description  : Source file for the Display driver [Used to display on the LED Ma
                                            < Global Variables >
 ==================================================================================================================*/
 
+uint8 g_dispaly_state = DISPLAY_ON;
+
 static HC595_registerPinsType g_rowsRegisterPins = {PORTA_ID,PIN0_ID,PORTA_ID,PIN1_ID,PORTA_ID,PIN2_ID};
 static HC595_registerPinsType g_colsRegisterPins = {PORTA_ID,PIN3_ID,PORTA_ID,PIN4_ID,PORTA_ID,PIN5_ID};
 
@@ -83,6 +85,9 @@ void DISPLAY_sendString(DISPLAY_characterType* a_ptr2message)
 	/* Iterate through the characters of the string and send them to the buffer to be displayed. */
 	for(uint8 character_counter = 0; *(a_ptr2message + character_counter) != MESSAGE_TERMINATOR; character_counter++)
 	{
+		/* Stop displaying if the display is turned OFF due to switching to receiving mode. */
+		if(g_dispaly_state == DISPLAY_OFF) return;
+
 		/* Send the current character to the buffer to be displayed. */
 		DISPLAY_sendCharacter(*(a_ptr2message + character_counter));
 
@@ -112,6 +117,9 @@ void DISPLAY_sendCharacter(DISPLAY_characterType a_character)
 		/* Iterate through the indexes of the character and send them to the buffer to be displayed. */
 		for(; *(character_map_address + character_map_index) != CHARACTER_MAP_TERMINATOR; character_map_index++)
 		{
+			/* Stop displaying if the display is turned OFF due to switching to receiving mode. */
+			if(g_dispaly_state == DISPLAY_OFF) return;
+
 			DISPLAY_shiftBuffer(); /* Shift the buffer indexes by one and store the next index at buffer[0]. */
 			g_display_buffer[0] = *(character_map_address + character_map_index);
 
