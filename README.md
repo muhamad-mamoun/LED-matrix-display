@@ -1,6 +1,6 @@
 # LED Matrix Display
 
-[Project description]
+This GitHub repository hosts the code and documentation for the LED matrix display project. The LED matrix display features an 8x32 configurable size and is capable of printing all 95 printable ASCII characters.
 
 ## Table of Contents
 
@@ -37,6 +37,5 @@ If you intend to use this code for commercial purposes or have any questions abo
 
 If you have any questions or need permission for commercial use, please contact the project owner:
 
-[Your Name]
-[Your Email Address]
-[Other Contact Information, if applicable]
+Muhamad Mamoun
+muhamadmamoun@gmail.com
