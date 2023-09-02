@@ -22,10 +22,6 @@ The project follows a layered model architecture consisting of three layers:
 - **HAL (Hardware Abstraction Layer)**: Includes the Shift Register and LED drivers.
 - **APP (Application Layer)**: Contains the Display driver, enabling the display of English characters and strings using a character map, and the application files.
 
-## Usage
-
-This repository contains the code, documentation, and character map needed to implement and customize the LED matrix display project. The provided code is open-source and released under a specific license.
-
 ## Future Work
 
 Future enhancements include storing character maps in External EEPROM and expanding character support to languages like Arabic. Contributions and collaborations are welcome!
