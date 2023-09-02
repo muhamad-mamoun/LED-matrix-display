@@ -1,11 +1,11 @@
 # LED Matrix Display
 
-> [!IMPORTANT]
-> This LED Matrix Display project is shared with the intention of fostering collaboration and learning within the open-source community. While you are welcome to use, modify, and distribute this code for personal and non-commercial purposes, I kindly request that you refrain from using it for commercial use without obtaining explicit permission from the project owner. Thank you for your understanding and cooperation. I appreciate your respect for the hard work put into its development.
-
 ## Overview
 
-This GitHub repository hosts the code and documentation for the LED matrix display project. The LED matrix display features an 8x32 configurable size and is capable of printing all 95 printable ASCII characters.
+This GitHub repository hosts the code, documentation, and character map needed to implement and customize the LED Matrix Display project. The LED Matrix Display features an 8x32 configurable size and is capable of printing all 95 printable ASCII characters.
+
+> [!IMPORTANT]
+> This LED Matrix Display project is shared with the intention of fostering collaboration and learning within the open-source community. While you are welcome to use, modify, and distribute this code for personal and non-commercial purposes, I kindly request that you refrain from using it for commercial use without obtaining explicit permission from the project owner. Thank you for your understanding and cooperation. I appreciate your respect for the hard work put into its development.
 
 ## Key Features
 
@@ -33,5 +33,4 @@ Future enhancements include storing character maps in External EEPROM and expand
 ## Contact
 
 If you have any questions or need permission for commercial use, please contact the project owner:
-
 ###### muhamadmamoun@gmail.com
