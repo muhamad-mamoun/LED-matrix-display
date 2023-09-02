@@ -1,18 +1,11 @@
 # LED Matrix Display
 
-This GitHub repository hosts the code and documentation for the LED matrix display project. The LED matrix display features an 8x32 configurable size and is capable of printing all 95 printable ASCII characters.
-
-
-
 > [!IMPORTANT]
-> This LED Matrix Display project is shared with the intention of fostering collaboration and learning within the open-source community. While you are welcome to use, modify, and distribute this code for personal and non-commercial purposes, we kindly request that you refrain from using it for commercial use without obtaining explicit permission from the project owner. Thank you for your understanding and cooperation. We appreciate your respect for the hard work put into its development.
-
-
-# LED Matrix Display Project
+> This LED Matrix Display project is shared with the intention of fostering collaboration and learning within the open-source community. While you are welcome to use, modify, and distribute this code for personal and non-commercial purposes, I kindly request that you refrain from using it for commercial use without obtaining explicit permission from the project owner. Thank you for your understanding and cooperation. I appreciate your respect for the hard work put into its development.
 
 ## Overview
 
-This GitHub repository hosts the code and documentation for a versatile LED matrix display project. The LED matrix display features an 8x32 configurable size and is capable of printing all 95 printable ASCII characters. Future improvements include support for Arabic and other language characters.
+This GitHub repository hosts the code and documentation for the LED matrix display project. The LED matrix display features an 8x32 configurable size and is capable of printing all 95 printable ASCII characters.
 
 ## Key Features
 
@@ -36,9 +29,6 @@ This repository contains the code, documentation, and character map needed to im
 ## Future Work
 
 Future enhancements include storing character maps in External EEPROM and expanding character support to languages like Arabic. Contributions and collaborations are welcome!
-
-
-
 
 ## Contact
 
