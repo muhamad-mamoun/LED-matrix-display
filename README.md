@@ -15,7 +15,6 @@ This LED Matrix Display project is shared with the intention of fostering collab
 ## Contact
 
 If you have any questions or need permission for commercial use, please contact the project owner:
-'''
-Muhamad Mamoun
-muhamadmamoun@gmail.com
-'''
+
+> Muhamad Mamoun
+> muhamadmamoun@gmail.com
