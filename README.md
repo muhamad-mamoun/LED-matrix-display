@@ -28,4 +28,4 @@ Future enhancements include storing character maps in External EEPROM and expand
 
 ## Contact
 
-If you have any questions or need permission for commercial use, please contact the project owner: muhamadmamoun@gmail.com
+If you have any questions or need permission for commercial use, please contact me: muhamadmamoun@gmail.com
